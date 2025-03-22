@@ -72,3 +72,4 @@ dmypy.json
 !.idea/runConfigurations
 
 static/uploads/
+static/models
