@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('static/images/start.jpg');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+    }
+
+    #project-title {
+      font-size: 42px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    #content-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 50px;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    #upload-container h2 {
+      margin-bottom: 10px;
+    }
+
+    #preview-container h3 {
+      margin-bottom: 10px;
+    }
+
+    #preview {
+      max-width: 100%;
+      height: auto;
+      display: none;
+      border-radius: 5px;
+    }
+
+    #upload-container, #preview-container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      margin-bottom: 20px;
+      margin-left: 20px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1 id="project-title">Identification of Chess Piece Type</h1>
+
+  <div id="content-container">
+    <div id="upload-container">
+      <h2>Upload an Image</h2>
+      <input type="file" id="fileInput" />
+      <button id="uploadBtn">Upload</button>
+    </div>
+
+    <div id="preview-container">
+      <h3>Preview:</h3>
+      <img id="preview" alt="Image preview" />
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("uploadBtn").addEventListener("click", async function () {
+      let fileInput = document.getElementById("fileInput");
+      let file = fileInput.files[0];
+
+      if (!file) {
+        alert("Please select a file!");
+        return;
+      }
+
+      let formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        let response = await fetch("/detect", {
+          method: "POST",
+          body: formData
+        });
+
+        let result = await response.json();
+
+        if (response.ok) {
+          let imageUrl = result.url;
+          let preview = document.getElementById("preview");
+          preview.src = imageUrl;
+          preview.style.display = "block";
+        } else {
+          alert("Error: " + result.error);
+        }
+      } catch (error) {
+        console.error("Error during fetch:", error);
+        alert("An error occurred while uploading the image.");
+      }
+    });
+  </script>
+
+</body>
+</html>
