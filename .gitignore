@@ -70,3 +70,5 @@ dmypy.json
 
 !.idea/codeStyles
 !.idea/runConfigurations
+
+static/uploads/
