@@ -1,16 +1,21 @@
-from flask import Flask
+import os
+
+from flask import Flask, request, render_template, jsonify
 import tensorflow as tf
+
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
 STATIC_FOLDER = "static"
 UPLOAD_FOLDER = "static/uploads/"
 
 cnn_model = tf.keras.models.load_model(STATIC_FOLDER + "/models/" + "save_at_56.keras")
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 
