@@ -18,6 +18,14 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/detect", methods=["POST"])
+def upload_file():
+    file = request.files["image"]
+    upload_image_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(upload_image_path)
+
+    return jsonify({"message": "File uploaded", "url": f"/static/uploads/{file.filename}"})
+
 
 if __name__ == '__main__':
     app.run()
