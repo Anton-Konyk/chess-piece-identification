@@ -51,3 +51,15 @@ def preprocess_image_for_predict(image_path, target_size=(SIZE, SIZE)):
     img_array = np.expand_dims(img_array, axis=0)
     return img_array
 
+
+def predict(model, image_path):
+    categories = ["Bishop \u265D", "King \u265A", "Knight \u265E", "Pawn \u265F", "Queen \u265B", "Rook \u265C"]
+
+    img_array = preprocess_image_for_predict(image_path)
+    predictions = model.predict(img_array)
+    pred_index = np.argmax(predictions, axis=1)[0]
+
+    pred_label = categories[pred_index]
+    confidence = predictions[0][pred_index] * 100
+
+    return pred_label, confidence
