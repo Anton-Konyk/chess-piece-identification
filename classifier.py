@@ -19,13 +19,20 @@ def image_adapt(image_path, output_folder):
 
             max_dim = max(img.size)
             new_img = Image.new("RGB", (max_dim, max_dim), background_color)
-            new_img.paste(img, ((max_dim - img.size[0]) // 2, (max_dim - img.size[1]) // 2))
+            new_img.paste(
+                img,
+                (
+                     (max_dim - img.size[0]) // 2,
+                     (max_dim - img.size[1]) // 2
+                     )
+            )
 
             new_img = new_img.resize((SIZE, SIZE), Image.LANCZOS)
 
             unique_id = str(int(time.time()))
             filename = os.path.basename(image_path)
-            output_filename = f"{os.path.splitext(filename)[0]}_{unique_id}.jpg"
+            output_filename = \
+                f"{os.path.splitext(filename)[0]}_{unique_id}.jpg"
 
             os.makedirs(output_folder, exist_ok=True)
 
@@ -53,7 +60,14 @@ def preprocess_image_for_predict(image_path, target_size=(SIZE, SIZE)):
 
 
 def predict(model, image_path):
-    categories = ["Bishop \u265D", "King \u265A", "Knight \u265E", "Pawn \u265F", "Queen \u265B", "Rook \u265C"]
+    categories = [
+        "Bishop \u265D",
+        "King \u265A",
+        "Knight \u265E",
+        "Pawn \u265F",
+        "Queen \u265B",
+        "Rook \u265C"
+    ]
 
     img_array = preprocess_image_for_predict(image_path)
     predictions = model.predict(img_array)
