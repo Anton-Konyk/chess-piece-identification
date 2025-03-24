@@ -9,7 +9,7 @@ respond about the expected type of figure with the percentage probability
 of determination.
 
 The type of chess piece is determined using a model trained in 
-the Google Colab (Many thanks for Google for this service with T4 GPU!)
+the Google Colab (_**Many thanks for Google for this service with T4 GPU!**_)
 environment based on convolutional neural networks and 
 the functionality of the keras, tensorflow library.
 https://colab.research.google.com/drive/1JEGjnhaymSYYUCMEoX3z6igVqJVJUcpU?usp=drive_link
@@ -20,7 +20,8 @@ Which was checked, edited and supplemented to 109 images for each of
 the 6 types of chess pieces. To create more extended datasets, 
 augmentation methods of generating images based on the basic ones 
 were used.
-After which images were obtained for training the model.
+After which images were obtained for training and validation a model.
+https://drive.google.com/drive/folders/1a27azc6300uGpFDBrIvnFa7dP3oohwGd?usp=sharing
 Found 3924 files belonging to 6 classes.
 Using 3140 files for training.
 Found 3924 files belonging to 6 classes.
@@ -33,6 +34,9 @@ The choice was made on the model that showed the following results:
 Epoch 56/70
 99/99 ━━━━━━━━━━━━━━━━━━━━━ 20s 125ms/step - 
 accuracy: 0.9872 - loss: 0.6870 - val_accuracy: 0.9745 - val_loss: 0.6728
+
+Models were tested by created test dataset:
+https://drive.google.com/drive/folders/1Qop-kDfbMFOkHXO38tLwWQAUYnnY3ZgW?usp=sharing
 
 ## Installing / Getting started
 
