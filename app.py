@@ -47,7 +47,14 @@ def upload_file():
     file.save(upload_image_path)
     adapted_image = image_adapt(upload_image_path, UPLOAD_FOLDER)
 
-    return jsonify({"message": "File uploaded", "url": f"/static/uploads/{file.filename}"})
+    pred_label, confidence = predict(cnn_model, adapted_image)
+
+    return jsonify({
+        "message": "File uploaded",
+        "url": adapted_image,
+        "predicted_label": pred_label,
+        "confidence": f"{confidence:.2f}"
+    })
 
 
 if __name__ == '__main__':
