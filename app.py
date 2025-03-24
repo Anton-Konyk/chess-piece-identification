@@ -4,6 +4,7 @@ import gdown
 from flask import Flask, request, render_template, jsonify
 import tensorflow as tf
 
+from classifier import image_adapt, predict
 
 app = Flask(__name__)
 
@@ -22,8 +23,20 @@ if not os.path.exists(MODEL_FILE):
 cnn_model = tf.keras.models.load_model(MODEL_FILE)
 
 
+def clear_upload_folder():
+    if os.path.exists(UPLOAD_FOLDER):
+        for filename in os.listdir(UPLOAD_FOLDER):
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f"Error while deleting {file_path}: {e}")
+
+
 @app.route("/")
 def index():
+    clear_upload_folder()
     return render_template("index.html")
 
 
@@ -37,4 +50,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
