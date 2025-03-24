@@ -45,6 +45,7 @@ def upload_file():
     file = request.files["image"]
     upload_image_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(upload_image_path)
+    adapted_image = image_adapt(upload_image_path, UPLOAD_FOLDER)
 
     return jsonify({"message": "File uploaded", "url": f"/static/uploads/{file.filename}"})
 
