@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: flask_app_chess_detection
+
+    ports:
+      - "5000:5000"
+
+    volumes:
+      - .:/app
+      - ./static/models:/app/static/models
+      - ./static/uploads:/app/static/uploads
+
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+
+    networks:
+      - flask_network
+
+    command: python -m flask run --host=0.0.0.0
+
+    restart:  always
+
+networks:
+  flask_network:
+    driver: bridge
