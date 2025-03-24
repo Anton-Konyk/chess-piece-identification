@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-image: url('static/images/start.jpg');
+      background-image: url("static/images/start.jpg");
       background-size: cover;
       background-position: center;
       min-height: 100vh;
@@ -62,6 +62,26 @@
       margin-left: 20px;
     }
 
+    #result-container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      margin-bottom: 20px;
+      margin-left: 20px;
+    }
+
+    #predicted-label {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    #confidence {
+      font-size: 16px;
+      color: green;
+    }
   </style>
 </head>
 <body>
@@ -78,6 +98,13 @@
     <div id="preview-container">
       <h3>Preview:</h3>
       <img id="preview" alt="Image preview" />
+    </div>
+
+    <!-- This will display the prediction results -->
+    <div id="result-container" style="display: none;">
+      <h3>Prediction:</h3>
+      <div id="predicted-label"></div>
+      <div id="confidence"></div>
     </div>
   </div>
 
@@ -104,9 +131,22 @@
 
         if (response.ok) {
           let imageUrl = result.url;
+          let predLabel = result.predicted_label;
+          let confidence = result.confidence;
+
           let preview = document.getElementById("preview");
           preview.src = imageUrl;
           preview.style.display = "block";
+
+          // Display prediction results
+          let resultContainer = document.getElementById("result-container");
+          resultContainer.style.display = "block";
+
+          let predictedLabelElement = document.getElementById("predicted-label");
+          let confidenceElement = document.getElementById("confidence");
+
+          predictedLabelElement.innerHTML = `Predicted Result: ${predLabel}`;
+          confidenceElement.innerHTML = `Confidence: ${confidence}%`;
         } else {
           alert("Error: " + result.error);
         }
